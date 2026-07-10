@@ -24,6 +24,8 @@ Not defined yet
 - https://symfony.com/doc/current/setup.html
 - https://react-bootstrap.netlify.app/docs/getting-started/introduction/
 - https://react.dev/learn/creating-a-react-app
+- https://dev.to/jic/deploying-a-php-web-app-to-azure-app-service-471c
+- https://learn.microsoft.com/en-us/azure/app-service/configure-language-php?pivots=platform-linux#change-site-root
 
 ### Tools
 - PhpStorm
