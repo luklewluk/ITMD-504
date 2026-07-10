@@ -31,3 +31,4 @@ Not defined yet
 
 ### AI Usage
 - Autocompletion in PhpStorm
+- [Project structure and Azure setup](docs/01-ai-azure-setup.md)
