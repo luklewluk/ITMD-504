@@ -19,6 +19,10 @@ Application is a Shopping List created from predefined products with the option 
 #### Backend
 - Health Check: https://itmd504-backend-gyagebeza5dsf0fj.spaincentral-01.azurewebsites.net/api/health
 
+## Design / Wireframe
+![Design](docs/design.png "Design")
+
+
 ## External sources
 ### Links
 - https://getbootstrap.com/docs/5.3/getting-started/introduction/

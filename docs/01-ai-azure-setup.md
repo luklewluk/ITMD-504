@@ -1,5 +1,8 @@
 # Project structure and Azure setup
 
+## Model
+GPT 5.5 in ChatGPT
+
 ## Prompt
 > As part of my Programming Foundations course, I need to create a web application for the final project. The frontend must communicate with the backend through an API. The application should be relatively simple, and it must support automatic deployment from GitHub.
 I would like to use React for the frontend and Symfony for the backend. What would be the best way to structure and deploy this project? Are there any predefined GitHub Actions workflows available? Would it be better to use two separate repositories or a single repository?
