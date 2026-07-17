@@ -16,6 +16,8 @@ Application is a Shopping List created from predefined products with the option 
 - PHP 8.4
 
 ### Server and deployment
+#### Frontend
+- https://itmd504-frontend-g5gnfwewexbpgrcw.spaincentral-01.azurewebsites.net
 #### Backend
 - Health Check: https://itmd504-backend-gyagebeza5dsf0fj.spaincentral-01.azurewebsites.net/api/health
 
