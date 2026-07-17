@@ -1,121 +1,70 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { useEffect, useState } from 'react'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [products, setProducts] = useState([])
+  const items = []
+
+  useEffect(() => {
+    fetch(import.meta.env.VITE_API_BASE_URL + '/api/products')
+      .then((r) => r.json())
+      .then(setProducts)
+  }, [])
+
+  const completedCount = items.filter((item) => item.completed).length
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+    <Container className="py-4 shopping-list">
+      <header className="border-bottom pb-3 mb-4">
+        <Row>
+          <Col>
+            <h1 className="h4 mb-1">🛒 Shopping List</h1>
+            <p className="text-muted mb-0">Keep track of your groceries</p>
+          </Col>
+          <Col xs="auto" className="text-muted">
+            <strong className="text-success">{completedCount}</strong> / {items.length}
+          </Col>
+        </Row>
+      </header>
+
+      <Card className="mb-4">
+        <Card.Body>
+          <div className="d-flex gap-2">
+            <Form.Control placeholder="+ Add custom product..." disabled />
+            <Button variant="success" disabled>
+              Add
+            </Button>
+          </div>
+
+          <p className="text-muted text-uppercase small mt-3 mb-2">Suggested items</p>
+          <div className="d-flex flex-wrap gap-2">
+            {products.map((item) => (
+              <Button key={item} variant="outline-secondary" size="sm" disabled>
+                + {item}
+              </Button>
+            ))}
+          </div>
+        </Card.Body>
+      </Card>
+
+      {items.map((item) => (
+        <div
+          key={item.id}
+          className="d-flex align-items-center gap-2 p-3 mb-2 bg-white border rounded"
         >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+          <Form.Check checked={item.completed} readOnly />
+          <span className={item.completed ? 'text-muted text-decoration-line-through' : ''}>
+            {item.name}
+          </span>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      ))}
+    </Container>
   )
 }
 
