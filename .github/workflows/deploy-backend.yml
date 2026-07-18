@@ -23,6 +23,8 @@ jobs:
 
       - name: Install dependencies
         working-directory: backend
+        env:
+          APP_ENV: prod
         run: composer install --no-dev --optimize-autoloader --no-interaction
 
       - name: Prepare Symfony cache
