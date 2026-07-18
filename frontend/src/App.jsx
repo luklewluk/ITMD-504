@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import './App.css'
+import cartIcon from './assets/cart.svg'
 
 function App() {
   const [products, setProducts] = useState([])
@@ -24,7 +25,13 @@ function App() {
       <header className="border-bottom pb-3 mb-4">
         <Row>
           <Col>
-            <h1 className="h4 mb-1">🛒 Shopping List</h1>
+            <h1 className="h4 mb-1 d-flex align-items-center gap-2"><img
+                src={cartIcon}
+                alt=""
+                aria-hidden="true"
+                width="24"
+                height="24"
+            /> Shopping List</h1>
             <p className="text-muted mb-0">Keep track of your groceries</p>
           </Col>
           <Col xs="auto" className="text-muted">
