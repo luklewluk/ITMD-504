@@ -34,6 +34,7 @@ jobs:
         run: |
           php bin/console cache:clear
           php bin/console cache:warmup
+          php bin/console doctrine:migrations:migrate
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
