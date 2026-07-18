@@ -24,6 +24,41 @@ Application is a Shopping List created from predefined products with the option 
 ## Design / Wireframe
 ![Design](docs/design.png "Design")
 
+## Test backend endpoints
+
+### PostMan collection
+- [PostMan collection](docs/postman-collection.json)
+
+### Products
+#### Get all products
+- Method: GET
+- https://itmd504-backend-gyagebeza5dsf0fj.spaincentral-01.azurewebsites.net/api/products
+
+#### Create new product
+- Method: POST
+- https://itmd504-backend-gyagebeza5dsf0fj.spaincentral-01.azurewebsites.net/api/products
+- Body:
+```json
+{
+  "name": "Bread",
+  "price": 19.99
+}
+```
+
+#### Update product
+- Method: PUT
+- https://itmd504-backend-gyagebeza5dsf0fj.spaincentral-01.azurewebsites.net/api/product/1
+- Body:
+```json
+{
+    "name": "Bread",
+    "price": 19.99
+}
+```
+
+#### Delete product
+- Method: DELETE
+- https://itmd504-backend-gyagebeza5dsf0fj.spaincentral-01.azurewebsites.net/api/product/1
 
 ## External sources
 ### Links
