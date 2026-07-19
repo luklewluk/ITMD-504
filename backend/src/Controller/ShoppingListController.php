@@ -68,6 +68,75 @@ class ShoppingListController
         ]);
     }
 
+    #[Route('/api/change-item-quantity/{id}/{quantity}', methods: ['PUT'])]
+    public function changeItemQuantity(int $id, int $quantity)
+    {
+        $shoppingListItem = $this->shoppingListItemRepository->find($id);
+        if ($shoppingListItem === null) {
+            return $this->json([
+                'success' => false,
+                'message' => 'Shopping list item not found',
+            ]);
+        }
+
+        $shoppingListItem->setQuantity($quantity);
+        $this->entityManager->flush();
+
+        return $this->json([
+            'success' => true,
+            'message' => 'Shopping list item quantity updated',
+        ]);
+    }
+
+    #[Route('/api/check-item/{id}', methods: ['PUT'])]
+    public function checkItem(int $id)
+    {
+        $shoppingListItem = $this->shoppingListItemRepository->find($id);
+        if ($shoppingListItem === null) {
+            return $this->json([
+                'success' => false,
+                'message' => 'Shopping list item not found',
+            ]);
+        }
+
+        $currentStatus = $shoppingListItem->isChecked();
+
+        if ($currentStatus === true) {
+            $shoppingListItem->setIsChecked(false);
+        } else {
+            $shoppingListItem->setIsChecked(true);
+        }
+
+        $this->entityManager->persist($shoppingListItem);
+        $this->entityManager->flush();
+
+        return $this->json([
+            'success' => true,
+            'message' => 'Shopping list item checked changed to ' . ($currentStatus === true ? 'false' : 'true'),
+        ]);
+
+    }
+
+    #[Route('/api/delete-shopping-list-item/{id}', methods: ['DELETE'])]
+    public function deleteShoppingListItem(int $id)
+    {
+        $shoppingListItem = $this->shoppingListItemRepository->find($id);
+        if ($shoppingListItem === null) {
+            return $this->json([
+                'success' => false,
+                'message' => 'Shopping list item not found',
+            ]);
+        }
+
+        $this->entityManager->remove($shoppingListItem);
+        $this->entityManager->flush();
+
+        return $this->json([
+            'success' => true,
+            'message' => 'Shopping list item deleted',
+        ]);
+    }
+
     private function json(mixed $data): JsonResponse
     {
         $response = new JsonResponse($data);

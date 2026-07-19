@@ -69,6 +69,18 @@ Application is a Shopping List created from predefined products with the option 
 - Method: POST
 - https://itmd504-backend-gyagebeza5dsf0fj.spaincentral-01.azurewebsites.net/api/add-item-by-product/{id}
 
+#### Delete shopping list item
+- Method: DELETE
+- https://itmd504-backend-gyagebeza5dsf0fj.spaincentral-01.azurewebsites.net/api/delete-shopping-list-item/{id}
+
+#### Change Shopping List Item quantity
+- Method: PUT
+- https://itmd504-backend-gyagebeza5dsf0fj.spaincentral-01.azurewebsites.net/api/change-item-quantity/{item-id}/{qunatity}
+
+#### Change Shopping List Item checked status
+- Method: PUT
+- https://itmd504-backend-gyagebeza5dsf0fj.spaincentral-01.azurewebsites.net/api/check-item/{item-id}
+
 ## External sources
 ### Links
 - https://getbootstrap.com/docs/5.3/getting-started/introduction/
