@@ -60,6 +60,15 @@ Application is a Shopping List created from predefined products with the option 
 - Method: DELETE
 - https://itmd504-backend-gyagebeza5dsf0fj.spaincentral-01.azurewebsites.net/api/product/1
 
+### Shopping List Items
+#### Get all shopping list items
+- Method: GET
+- https://itmd504-backend-gyagebeza5dsf0fj.spaincentral-01.azurewebsites.net/api/shopping-list-items
+
+#### Create a new shopping list item
+- Method: POST
+- https://itmd504-backend-gyagebeza5dsf0fj.spaincentral-01.azurewebsites.net/api/add-item-by-product/{id}
+
 ## External sources
 ### Links
 - https://getbootstrap.com/docs/5.3/getting-started/introduction/
