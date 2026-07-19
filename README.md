@@ -98,3 +98,4 @@ Application is a Shopping List created from predefined products with the option 
 - Autocompletion in PhpStorm
 - [Project structure and Azure setup](docs/01-ai-azure-setup.md)
 - [Design application](docs/02-design-app.md)
+- [Fixing CORS between the React frontend and Symfony API](docs/03-cors-issue.md)

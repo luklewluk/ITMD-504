@@ -8,17 +8,70 @@ import Button from 'react-bootstrap/Button'
 import './App.css'
 import cartIcon from './assets/cart.svg'
 
+const API = import.meta.env.VITE_API_BASE_URL
+
 function App() {
   const [products, setProducts] = useState([])
-  const items = []
+  const [items, setItems] = useState([])
+  const [newName, setNewName] = useState('')
+  const [newPrice, setNewPrice] = useState('')
 
-  useEffect(() => {
-    fetch(import.meta.env.VITE_API_BASE_URL + '/api/products')
+  function loadProducts() {
+    fetch(API + '/api/products')
       .then((r) => r.json())
       .then(setProducts)
+  }
+
+  function loadItems() {
+    fetch(API + '/api/shopping-list-items')
+      .then((r) => r.json())
+      .then(setItems)
+  }
+
+  useEffect(() => {
+    loadProducts()
+    loadItems()
   }, [])
 
-  const completedCount = items.filter((item) => item.completed).length
+  function addToList(productId) {
+    fetch(API + '/api/add-item-by-product/' + productId, { method: 'POST' })
+      .then(loadItems)
+  }
+
+  function toggleCheck(itemId) {
+    fetch(API + '/api/check-item/' + itemId, { method: 'PUT' })
+      .then(loadItems)
+  }
+
+  function changeQuantity(itemId, quantity) {
+    if (quantity < 1) return
+    fetch(API + '/api/change-item-quantity/' + itemId + '/' + quantity, { method: 'PUT' })
+      .then(loadItems)
+  }
+
+  function deleteItem(itemId) {
+    fetch(API + '/api/delete-shopping-list-item/' + itemId, { method: 'DELETE' })
+      .then(loadItems)
+  }
+
+  function createProduct() {
+    fetch(API + '/api/products', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: newName, price: newPrice }),
+    }).then(() => {
+      setNewName('')
+      setNewPrice('')
+      loadProducts()
+    })
+  }
+
+  function deleteProduct(productId) {
+    fetch(API + '/api/product/' + productId, { method: 'DELETE' })
+      .then(loadProducts)
+  }
+
+  const completedCount = items.filter((item) => item.is_checked).length
 
   return (
     <Container className="py-4 shopping-list">
@@ -43,18 +96,41 @@ function App() {
       <Card className="mb-4">
         <Card.Body>
           <div className="d-flex gap-2">
-            <Form.Control placeholder="+ Add custom product..." disabled />
-            <Button variant="success" disabled>
+            <Form.Control
+              placeholder="Product name..."
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+            />
+            <Form.Control
+              placeholder="Price"
+              value={newPrice}
+              onChange={(e) => setNewPrice(e.target.value)}
+              style={{ maxWidth: '120px' }}
+            />
+            <Button variant="success" onClick={createProduct}>
               Add
             </Button>
           </div>
 
           <p className="text-muted text-uppercase small mt-3 mb-2">Suggested items</p>
           <div className="d-flex flex-wrap gap-2">
-            {products.map((item) => (
-              <Button key={item} variant="outline-secondary" size="sm" disabled>
-                + {item}
-              </Button>
+            {products.map((product) => (
+              <div key={product.id} className="btn-group" role="group">
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  onClick={() => addToList(product.id)}
+                >
+                  + {product.name}
+                </Button>
+                <Button
+                  variant="outline-danger"
+                  size="sm"
+                  onClick={() => deleteProduct(product.id)}
+                >
+                  ×
+                </Button>
+              </div>
             ))}
           </div>
         </Card.Body>
@@ -65,10 +141,39 @@ function App() {
           key={item.id}
           className="d-flex align-items-center gap-2 p-3 mb-2 bg-white border rounded"
         >
-          <Form.Check checked={item.completed} readOnly />
-          <span className={item.completed ? 'text-muted text-decoration-line-through' : ''}>
-            {item.name}
+          <Form.Check
+            checked={item.is_checked}
+            onChange={() => toggleCheck(item.id)}
+          />
+          <span className={item.is_checked ? 'text-muted text-decoration-line-through' : ''}>
+            {item.product_name}
           </span>
+          <span className="text-muted small">${item.product_price}</span>
+
+          <div className="ms-auto d-flex align-items-center gap-2">
+            <Button
+              variant="outline-secondary"
+              size="sm"
+              onClick={() => changeQuantity(item.id, item.quantity - 1)}
+            >
+              −
+            </Button>
+            <span>{item.quantity}</span>
+            <Button
+              variant="outline-secondary"
+              size="sm"
+              onClick={() => changeQuantity(item.id, item.quantity + 1)}
+            >
+              +
+            </Button>
+            <Button
+              variant="outline-danger"
+              size="sm"
+              onClick={() => deleteItem(item.id)}
+            >
+              Delete
+            </Button>
+          </div>
         </div>
       ))}
     </Container>
